@@ -28,23 +28,24 @@
     <div id="carregando"><h1>VAQUEJADA</h1><div id="barra"><div></div></div><div id="pct">Carregando a vaquejada…</div></div>
     <div id="girar">Vire o celular de lado para jogar a Vaquejada</div>
     <div id="erro"></div>
-    <script src="Build/WebGL.loader.js?v=20261024021859"></script>
+    <script src="Build/WebGL.loader.js?v=20261024042924"></script>
     <script>
       var canvas = document.getElementById("unity-canvas");
       var fill = document.querySelector("#barra > div");
       var pct = document.getElementById("pct");
       function erro(msg) { var e = document.getElementById("erro"); e.textContent = msg; e.style.display = "block"; }
       var config = {
-        dataUrl: "Build/WebGL.data.unityweb?v=20261024021859",
-        frameworkUrl: "Build/WebGL.framework.js.unityweb?v=20261024021859",
-        codeUrl: "Build/WebGL.wasm.unityweb?v=20261024021859",
+        dataUrl: "Build/WebGL.data.unityweb?v=20261024042924",
+        frameworkUrl: "Build/WebGL.framework.js.unityweb?v=20261024042924",
+        codeUrl: "Build/WebGL.wasm.unityweb?v=20261024042924",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Leonardo",
         productName: "Vaquejada",
         productVersion: "0.1.0",
         matchWebGLToCanvasSize: true,
         // Celular: resolução nativa inteira pesa demais — no máximo 1,5× a da tela.
-        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 1.5),
+        // Celular: 1 pixel de jogo por pixel CSS (leve); PC: até 1,5. O jogo ajusta depois (resolução adaptativa).
+        devicePixelRatio: /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ? 1 : Math.min(window.devicePixelRatio || 1, 1.5),
         showBanner: function (msg, type) { if (type === "error") erro(msg); },
       };
       createUnityInstance(canvas, config, function (p) {
