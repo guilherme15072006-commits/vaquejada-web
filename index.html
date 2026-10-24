@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#160f0a">
+    <title>Vaquejada</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #160f0a;
+                   touch-action: none; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
+      #unity-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; background: #160f0a; outline: none; }
+      #carregando { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+                    color: #fbeed0; font: 600 18px system-ui, -apple-system, sans-serif; z-index: 5; background: #160f0a; gap: 16px; }
+      #carregando h1 { margin: 0; font-size: 44px; letter-spacing: .04em; }
+      #barra { width: min(70vw, 420px); height: 10px; border-radius: 5px; background: rgba(255,255,255,.12); overflow: hidden; }
+      #barra > div { height: 100%; width: 0%; background: #e1a63b; transition: width .2s; }
+      #girar { display: none; position: fixed; inset: 0; z-index: 10; background: #160f0a; color: #fbeed0;
+               font: 600 20px system-ui, sans-serif; align-items: center; justify-content: center; text-align: center; padding: 24px; }
+      @media (orientation: portrait) and (pointer: coarse) { #girar { display: flex; } }
+      #erro { display: none; position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 11; padding: 12px 16px; border-radius: 10px;
+              background: #7a1e14; color: #fff; font: 15px system-ui, sans-serif; }
+    </style>
+  </head>
+  <body>
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="carregando"><h1>VAQUEJADA</h1><div id="barra"><div></div></div><div id="pct">Carregando a vaquejada…</div></div>
+    <div id="girar">Vire o celular de lado para jogar a Vaquejada</div>
+    <div id="erro"></div>
+    <script src="Build/WebGL.loader.js"></script>
+    <script>
+      var canvas = document.getElementById("unity-canvas");
+      var fill = document.querySelector("#barra > div");
+      var pct = document.getElementById("pct");
+      function erro(msg) { var e = document.getElementById("erro"); e.textContent = msg; e.style.display = "block"; }
+      var config = {
+        dataUrl: "Build/WebGL.data.unityweb",
+        frameworkUrl: "Build/WebGL.framework.js.unityweb",
+        codeUrl: "Build/WebGL.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Leonardo",
+        productName: "Vaquejada",
+        productVersion: "0.1.0",
+        matchWebGLToCanvasSize: true,
+        // Celular: resolução nativa inteira pesa demais — no máximo 1,5× a da tela.
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 1.5),
+        showBanner: function (msg, type) { if (type === "error") erro(msg); },
+      };
+      createUnityInstance(canvas, config, function (p) {
+        fill.style.width = Math.round(p * 100) + "%";
+        pct.textContent = "Carregando a vaquejada… " + Math.round(p * 100) + "%";
+      }).then(function () {
+        document.getElementById("carregando").remove();
+        canvas.focus();
+      }).catch(function (m) { erro("Não foi possível abrir o jogo: " + m); });
+    </script>
+  </body>
+</html>
