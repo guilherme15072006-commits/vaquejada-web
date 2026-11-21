@@ -1,0 +1,72 @@
+@import '../styles/tokens.css';
+@tailwind base;
+@tailwind components;
+@layer components {
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -10px 30px rgba(0,0,0,0.25), 0 20px 50px -20px rgba(0,0,0,0.7);
+  position: relative; isolation: isolate;
+}
+.glass::before { /* borda gradiente dourada translúcida */
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,244,204,0.55), var(--glass-border) 40%, rgba(140,106,28,0.18));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.glass-strong { background: var(--glass-bg-strong); }
+.glass-gold { background: linear-gradient(160deg, rgba(212,175,55,0.18), rgba(140,106,28,0.06)); }
+}
+@tailwind utilities;
+
+html, body { background: var(--ink-900); color: var(--text-primary); }
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(212,175,55,0.10), transparent 60%),
+    radial-gradient(800px 600px at 110% 110%, rgba(140,106,28,0.10), transparent 60%),
+    var(--ink-900);
+}
+::selection { background: rgba(212,175,55,0.35); color: #fff; }
+:focus-visible { outline: 2px solid var(--gold-200); outline-offset: 3px; border-radius: 10px; }
+button { -webkit-tap-highlight-color: transparent; }
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+  .text-gold-metal {
+    background: var(--gold-metal);
+    background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    animation: gold-sheen 6s var(--ease-water) infinite;
+  }
+  .bg-gold-metal { background: var(--gold-metal); background-size: 220% 100%; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  .touch { min-height: 44px; min-width: 44px; }
+}
+
+@keyframes gold-sheen {
+  0%, 70% { background-position: 100% 0; }
+  85% { background-position: 0% 0; }
+  100% { background-position: 100% 0; }
+}
+@keyframes shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes bubble { 0% { transform: translateY(0) scale(.6); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-120px) scale(1); opacity: 0; } }
+
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+html[data-motion='reduced'] *, html[data-motion='reduced'] *::before, html[data-motion='reduced'] *::after {
+  animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important;
+}
+
+/* Reduzir transparência: sem refração nem reflexo, superfícies sólidas */
+html[data-transparency='reduced'] .fx-layer { display: none; }
+html[data-transparency='reduced'] .glass { box-shadow: 0 10px 30px -15px rgba(0,0,0,.8); }

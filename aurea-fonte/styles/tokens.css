@@ -1,0 +1,52 @@
+:root {
+  --gold-100: #FFF4CC;
+  --gold-200: #F5D77A;
+  --gold-300: #E8C15A;
+  --gold-400: #D4AF37;
+  --gold-500: #B8912A;
+  --gold-600: #8C6A1C;
+  --gold-metal: linear-gradient(135deg, #FFF4CC 0%, #D4AF37 35%, #8C6A1C 60%, #F5D77A 100%);
+
+  --ink-900: #07070A;
+  --ink-800: #0E0E13;
+  --ink-700: #16161D;
+
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-bg-strong: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(245, 215, 122, 0.28);
+  --glass-highlight: rgba(255, 255, 255, 0.35);
+  --glass-blur: 24px;
+
+  --text-primary: #FAF7EE;
+  --text-secondary: rgba(250, 247, 238, 0.68);
+  --text-gold: #F5D77A;
+
+  --success: #7FE0A8;
+  --danger: #FF7A7A;
+
+  --radius-sm: 14px;
+  --radius-md: 22px;
+  --radius-lg: 32px;
+  --radius-pill: 999px;
+
+  --ease-water: cubic-bezier(0.22, 1, 0.36, 1);
+  --veil: rgba(7, 7, 10, 0.35);
+}
+
+/* Reduzir transparência: vidro vira superfície sólida escura com borda dourada */
+html[data-transparency='reduced'] {
+  --glass-bg: #14141B;
+  --glass-bg-strong: #1B1B24;
+  --glass-border: rgba(212, 175, 55, 0.45);
+  --glass-blur: 0px;
+  --veil: transparent;
+}
+@media (prefers-reduced-transparency: reduce) {
+  html:not([data-transparency='full']) {
+    --glass-bg: #14141B;
+    --glass-bg-strong: #1B1B24;
+    --glass-border: rgba(212, 175, 55, 0.45);
+    --glass-blur: 0px;
+    --veil: transparent;
+  }
+}
