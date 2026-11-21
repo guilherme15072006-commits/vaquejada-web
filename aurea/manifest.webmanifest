@@ -1,0 +1,2 @@
+{ "name": "Áurea", "short_name": "Áurea", "start_url": "./splash/", "display": "standalone", "background_color": "#07070A", "theme_color": "#07070A", "lang": "pt-BR",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }] }
